@@ -3,60 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerStates { OnGround, InAir }
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private Transform groundDetectPoint;
-    [SerializeField]
-    private float groundDetectRadius = 0.2f;
-    [SerializeField]
-    private LayerMask groundLayer;
     [SerializeField]
     private float movementSpeed = 10f;
     [SerializeField]
     private float jumpVelocity = 10f;
-    private PlayerStates currentState;
 
     PlayerController controller;
+    PlayerState playerState;
     Rigidbody2D rb;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         controller = GetComponent<PlayerController>();
+        playerState = GetComponent<PlayerState>();
         rb = GetComponent<Rigidbody2D>();
-	}
-	
-	// Update is called once per frame
-	private void Update ()
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
-        //UpdateGroundState();
         UpdateMovement();
         UpdateJump();
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if(currentState == PlayerStates.InAir)
-    //    {
-    //        currentState = PlayerStates.OnGround;
-    //    }
-    //}
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        UpdateGroundState();
-    }
-    private void UpdateGroundState()
-    {
-        Vector2 colliderPoint = new Vector2(groundDetectPoint.position.x, groundDetectPoint.position.y);
-        Collider2D[] objects = Physics2D.OverlapCircleAll(colliderPoint, groundDetectRadius ,groundLayer);
-        if(objects.Length > 0 && currentState == PlayerStates.InAir)
-        {
-            currentState = PlayerStates.OnGround;
-        }
-    }
     private void UpdateMovement()
     {
         float horizontalInput = controller.GetHorizontal();
@@ -66,10 +38,20 @@ public class PlayerMovement : MonoBehaviour
     }
     private void UpdateJump()
     {
-        if (controller.IsPressedOnce("Jump") && currentState == PlayerStates.OnGround)
+        if (controller.IsPressedOnce("Jump") && playerState.GetState() == PlayerStates.OnGround)
         {
-                rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
-                currentState = PlayerStates.InAir;
+            Jump();
+            playerState.SetState(PlayerStates.InAir);
         }
+        else if(controller.IsPressedOnce("Jump") && playerState.GetState() == PlayerStates.InAir)
+        {
+            Jump();
+            playerState.SetState(PlayerStates.DoubleAir);
+        }
+    }
+
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
     }
 }
