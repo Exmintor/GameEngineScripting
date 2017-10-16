@@ -10,10 +10,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float jumpVelocity = 10f;
 
-    PlayerController controller;
-    PlayerState playerState;
-    Rigidbody2D rb;
+    private PlayerController controller;
+    private PlayerState playerState;
+    private Rigidbody2D rb;
 
+    private float horizontalInput;
+    private bool hasJumped;
     // Use this for initialization
     void Start()
     {
@@ -22,36 +24,59 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     private void Update()
+    {
+        GetMovementInput();
+        GetJumpInput();
+    }
+    private void FixedUpdate()
     {
         UpdateMovement();
         UpdateJump();
     }
 
+    private void GetMovementInput()
+    {
+        horizontalInput = controller.GetHorizontal();
+    }
+    private void GetJumpInput()
+    {
+        if(controller.IsPressedOnce("Jump") && playerState.GetState() == PlayerStates.OnGround)
+        {
+            hasJumped = true;
+        }
+        else if(controller.IsPressedOnce("Jump") && playerState.GetState() == PlayerStates.InAir)
+        {
+            hasJumped = true;
+        }
+    }
     private void UpdateMovement()
     {
-        float horizontalInput = controller.GetHorizontal();
         rb.velocity = new Vector2(horizontalInput * movementSpeed, rb.velocity.y);
         //Doesn't use physics system
         //transform.Translate(0.1f * horizontalInput, 0, 0);
     }
     private void UpdateJump()
     {
-        if (controller.IsPressedOnce("Jump") && playerState.GetState() == PlayerStates.OnGround)
+        if (hasJumped && playerState.GetState() == PlayerStates.OnGround)
         {
             Jump();
+            hasJumped = false;
             playerState.SetState(PlayerStates.InAir);
         }
-        else if(controller.IsPressedOnce("Jump") && playerState.GetState() == PlayerStates.InAir)
+        else if(hasJumped && playerState.GetState() == PlayerStates.InAir)
         {
             Jump();
+            hasJumped = false;
             playerState.SetState(PlayerStates.DoubleAir);
         }
     }
 
     private void Jump()
     {
+        //Gameplay is more realistic
+        //rb.AddForce(new Vector2(0, jumpVelocity), ForceMode2D.Impulse);
+        //Gameplay is more fun
         rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
     }
 }

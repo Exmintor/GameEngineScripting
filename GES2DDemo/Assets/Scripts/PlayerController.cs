@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float horizontalInput;
+    private float verticalInput;
 
 	// Use this for initialization
 	void Start ()
@@ -16,11 +17,16 @@ public class PlayerController : MonoBehaviour
 	void Update ()
     {
         horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
 	}
 
     public float GetHorizontal()
     {
         return horizontalInput;
+    }
+    public float GetVertical()
+    {
+        return verticalInput;
     }
     public bool IsPressed(string key)
     {

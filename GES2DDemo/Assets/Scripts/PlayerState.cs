@@ -6,7 +6,6 @@ public enum PlayerStates { OnGround, InAir, DoubleAir }
 
 public class PlayerState : MonoBehaviour
 {
-
     [SerializeField]
     private Transform groundDetectPoint;
     [SerializeField]
