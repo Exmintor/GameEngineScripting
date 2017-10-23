@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour
     private float movementSpeed = 10f;
     [SerializeField]
     private float jumpVelocity = 10f;
-    [SerializeField]
-    private float dashSpeed = 5f;
 
     private PlayerController controller;
     private PlayerState playerState;
@@ -18,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
 
     private float horizontalInput;
     private bool hasJumped;
-    private bool hasDashed;
     // Use this for initialization
     void Start()
     {
@@ -35,17 +32,12 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateMovement();
-        ResetDash();
         UpdateJump();
     }
 
     private void GetMovementInput()
     {
         horizontalInput = controller.GetHorizontal();
-        if (controller.IsPressedOnce("Dash") && !hasDashed)
-        {
-            hasDashed = true;
-        }
     }
     private void GetJumpInput()
     {
@@ -59,21 +51,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void ResetDash()
-    {
-        if(playerState.GetState() == PlayerStates.OnGround)
-        {
-            hasDashed = false;
-        }
-    }
-
     private void UpdateMovement()
     {
         rb.velocity = new Vector2(horizontalInput * movementSpeed, rb.velocity.y);
-        if(hasDashed)
-        {
-            rb.velocity = new Vector2(horizontalInput * movementSpeed + dashSpeed * horizontalInput, rb.velocity.y);
-        }
+        //rb.AddForce(new Vector2(horizontalInput * movementSpeed, 0), ForceMode2D.Impulse);
         //Doesn't use physics system
         //transform.Translate(0.1f * horizontalInput, 0, 0);
     }

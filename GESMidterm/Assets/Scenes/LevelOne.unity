@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 932869725}
   - component: {fileID: 932869724}
   - component: {fileID: 932869728}
+  - component: {fileID: 932869729}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -273,7 +274,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   jumpVelocity: 5
-  dashSpeed: 50
 --- !u!114 &932869725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +329,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf32cf1487462ad4dae69d27ad4c5698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &932869729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 932869719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b429ff66d7979034081e6e9e882b3c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 10
+  maxSpeed: 20
 --- !u!1 &1565015911
 GameObject:
   m_ObjectHideFlags: 0
