@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerController controller;
     private PlayerState playerState;
     private Rigidbody2D rb;
+    private AudioSource audioSource;
 
     private float horizontalInput;
     private bool hasJumped;
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<PlayerController>();
         playerState = GetComponent<PlayerState>();
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -74,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        audioSource.Play();
         //Gameplay is more realistic
         //rb.AddForce(new Vector2(0, jumpVelocity), ForceMode2D.Impulse);
         //Gameplay is more fun
