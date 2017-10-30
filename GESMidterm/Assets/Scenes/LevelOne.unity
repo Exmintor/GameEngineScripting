@@ -174,11 +174,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1214167470595702, guid: 6224272bde3c48940a3badc5ae974b09, type: 2}
       propertyPath: m_Layer
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1436666199411378, guid: 6224272bde3c48940a3badc5ae974b09, type: 2}
       propertyPath: m_Layer
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1806828033508886, guid: 6224272bde3c48940a3badc5ae974b09, type: 2}
       propertyPath: m_Layer
@@ -188,6 +188,18 @@ Prefab:
         type: 2}
       propertyPath: m_UseOneWay
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275806299409666, guid: 6224272bde3c48940a3badc5ae974b09, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420437879662104, guid: 6224272bde3c48940a3badc5ae974b09, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284839851473194, guid: 6224272bde3c48940a3badc5ae974b09, type: 2}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6224272bde3c48940a3badc5ae974b09, type: 2}
@@ -230,36 +242,6 @@ Prefab:
     - target: {fileID: 4064161620979510, guid: c24d41a55b5728b4eb9095b84fe4c222, type: 2}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114358827212285892, guid: c24d41a55b5728b4eb9095b84fe4c222,
-        type: 2}
-      propertyPath: jumpVelocity
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114358827212285892, guid: c24d41a55b5728b4eb9095b84fe4c222,
-        type: 2}
-      propertyPath: movementSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114925083250378160, guid: c24d41a55b5728b4eb9095b84fe4c222,
-        type: 2}
-      propertyPath: dashSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114925083250378160, guid: c24d41a55b5728b4eb9095b84fe4c222,
-        type: 2}
-      propertyPath: maxSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 61887771522605254, guid: c24d41a55b5728b4eb9095b84fe4c222,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 61887771522605254, guid: c24d41a55b5728b4eb9095b84fe4c222,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.28
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c24d41a55b5728b4eb9095b84fe4c222, type: 2}

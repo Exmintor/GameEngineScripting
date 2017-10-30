@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float horizontalInput;
     private bool hasJumped;
+
+    private Vector3 startPosition;
+    private Checkpoint currentCheckpoint;
     // Use this for initialization
     void Start()
     {
@@ -24,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
         playerState = GetComponent<PlayerState>();
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        startPosition = this.transform.position;
     }
 
     private void Update()
@@ -81,5 +85,19 @@ public class PlayerMovement : MonoBehaviour
         //rb.AddForce(new Vector2(0, jumpVelocity), ForceMode2D.Impulse);
         //Gameplay is more fun
         rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
+    }
+
+    public Vector3 GetSpawnPoint()
+    {
+        return startPosition;
+    }
+    public void ChangeSpawnPoint(Checkpoint newCheckpoint)
+    {
+        if(currentCheckpoint != null)
+        {
+            currentCheckpoint.DeactivateCheckpoint();
+        }
+        currentCheckpoint = newCheckpoint;
+        startPosition = newCheckpoint.GetSpawnPoint();
     }
 }

@@ -12,6 +12,8 @@ public class PlayerState : MonoBehaviour
     private float groundDetectRadius = 0.2f;
     [SerializeField]
     private LayerMask groundLayer;
+    [SerializeField]
+    private LayerMask secondGroundLayer;
 
     private PlayerStates currentState;
 
@@ -41,7 +43,12 @@ public class PlayerState : MonoBehaviour
     {
         Vector2 colliderPoint = new Vector2(groundDetectPoint.position.x, groundDetectPoint.position.y);
         Collider2D[] objects = Physics2D.OverlapCircleAll(colliderPoint, groundDetectRadius, groundLayer);
+        Collider2D[] objects2 = Physics2D.OverlapCircleAll(colliderPoint, groundDetectRadius, secondGroundLayer);
         if (objects.Length > 0 && (currentState == PlayerStates.InAir || currentState == PlayerStates.DoubleAir))
+        {
+            SetState(PlayerStates.OnGround);
+        }
+        if(objects2.Length > 0 && (currentState == PlayerStates.InAir || currentState == PlayerStates.DoubleAir))
         {
             SetState(PlayerStates.OnGround);
         }
