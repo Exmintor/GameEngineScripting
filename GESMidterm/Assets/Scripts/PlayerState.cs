@@ -14,10 +14,14 @@ public class PlayerState : MonoBehaviour
     private LayerMask groundLayer;
 
     private PlayerStates currentState;
+
+    public delegate void PlayerStateDelegate(PlayerStates previousState, PlayerStates newState);
+    public event PlayerStateDelegate PlayerChangedStates;
+
     // Use this for initialization
     void Start ()
     {
-        currentState = PlayerStates.InAir;
+        currentState = PlayerStates.OnGround;
 	}
 
     //private void OnCollisionEnter2D(Collision2D collision)
@@ -39,7 +43,7 @@ public class PlayerState : MonoBehaviour
         Collider2D[] objects = Physics2D.OverlapCircleAll(colliderPoint, groundDetectRadius, groundLayer);
         if (objects.Length > 0 && (currentState == PlayerStates.InAir || currentState == PlayerStates.DoubleAir))
         {
-            currentState = PlayerStates.OnGround;
+            SetState(PlayerStates.OnGround);
         }
     }
 
@@ -50,6 +54,14 @@ public class PlayerState : MonoBehaviour
 
     public void SetState(PlayerStates state)
     {
-        currentState = state;
+        if(state != currentState)
+        {
+            PlayerStates previous = currentState;
+            currentState = state;
+            if (PlayerChangedStates != null)
+            {
+                PlayerChangedStates.Invoke(previous, currentState);
+            }
+        }
     }
 }

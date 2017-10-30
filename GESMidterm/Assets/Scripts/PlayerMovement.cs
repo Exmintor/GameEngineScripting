@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerController controller;
     private PlayerState playerState;
     private Rigidbody2D rb;
+    private BoxCollider2D boxCollider;
 
     private float horizontalInput;
     private bool hasJumped;
@@ -22,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<PlayerController>();
         playerState = GetComponent<PlayerState>();
         rb = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+
+        playerState.PlayerChangedStates += HandleStateChange;
     }
 
     private void Update()
@@ -80,5 +84,17 @@ public class PlayerMovement : MonoBehaviour
         //rb.AddForce(new Vector2(0, jumpVelocity), ForceMode2D.Impulse);
         //Gameplay is more fun
         rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
+    }
+
+    private void HandleStateChange(PlayerStates previous, PlayerStates newState)
+    {
+        if(previous == PlayerStates.OnGround && newState == PlayerStates.InAir)
+        {
+            boxCollider.offset = new Vector2(boxCollider.offset.x, boxCollider.offset.y + 0.5f);
+        }
+        else if((previous == PlayerStates.InAir || previous == PlayerStates.DoubleAir) && newState == PlayerStates.OnGround)
+        {
+            boxCollider.offset = new Vector2(boxCollider.offset.x, boxCollider.offset.y - 0.5f);
+        }
     }
 }
