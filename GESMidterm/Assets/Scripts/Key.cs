@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Key : MonoBehaviour
 {
-    static int keyCount = 0;
+    public static int keyCount = 0;
 
     private Text textField;
     private SpriteRenderer spriteRenderer;
