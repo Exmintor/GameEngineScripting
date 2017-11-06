@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float horizontalInput;
     private bool hasJumped;
+
+    private Vector3 startPosition;
+    private Checkpoint currentCheckpoint;
     // Use this for initialization
     void Start()
     {
@@ -24,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
         playerState = GetComponent<PlayerState>();
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        startPosition = this.transform.position;
 
         playerState.PlayerChangedStates += HandleStateChange;
     }
@@ -90,11 +94,29 @@ public class PlayerMovement : MonoBehaviour
     {
         if(previous == PlayerStates.OnGround && newState == PlayerStates.InAir)
         {
-            boxCollider.offset = new Vector2(boxCollider.offset.x, boxCollider.offset.y + 0.5f);
+            boxCollider.offset = new Vector2(boxCollider.offset.x, boxCollider.offset.y + 0.6f);
+            Vector3 position = playerState.groundDetectPoint.transform.position;
+            playerState.groundDetectPoint.transform.position = new Vector3(position.x, position.y + 0.4f);
         }
         else if((previous == PlayerStates.InAir || previous == PlayerStates.DoubleAir) && newState == PlayerStates.OnGround)
         {
-            boxCollider.offset = new Vector2(boxCollider.offset.x, boxCollider.offset.y - 0.5f);
+            boxCollider.offset = new Vector2(boxCollider.offset.x, boxCollider.offset.y - 0.6f);
+            Vector3 position = playerState.groundDetectPoint.transform.position;
+            playerState.groundDetectPoint.transform.position = new Vector3(position.x, position.y - 0.4f);
         }
+    }
+
+    public Vector3 GetSpawnPoint()
+    {
+        return startPosition;
+    }
+    public void ChangeSpawnPoint(Checkpoint newCheckpoint)
+    {
+        if (currentCheckpoint != null)
+        {
+            currentCheckpoint.DeactivateCheckpoint();
+        }
+        currentCheckpoint = newCheckpoint;
+        startPosition = newCheckpoint.GetSpawnPoint();
     }
 }

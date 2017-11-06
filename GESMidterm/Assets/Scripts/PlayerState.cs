@@ -7,7 +7,7 @@ public enum PlayerStates { OnGround, InAir, DoubleAir }
 public class PlayerState : MonoBehaviour
 {
     [SerializeField]
-    private Transform groundDetectPoint;
+    public Transform groundDetectPoint;
     [SerializeField]
     private float groundDetectRadius = 0.2f;
     [SerializeField]
@@ -16,6 +16,7 @@ public class PlayerState : MonoBehaviour
     private LayerMask secondGroundLayer;
 
     private PlayerStates currentState;
+    private Rigidbody2D playerRB;
 
     public delegate void PlayerStateDelegate(PlayerStates previousState, PlayerStates newState);
     public event PlayerStateDelegate PlayerChangedStates;
@@ -24,6 +25,7 @@ public class PlayerState : MonoBehaviour
     void Start ()
     {
         currentState = PlayerStates.OnGround;
+        playerRB = gameObject.GetComponent<Rigidbody2D>();
 	}
 
     //private void OnCollisionEnter2D(Collision2D collision)
@@ -34,7 +36,7 @@ public class PlayerState : MonoBehaviour
     //    }
     //}
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         UpdateGroundState();
     }
@@ -44,11 +46,11 @@ public class PlayerState : MonoBehaviour
         Vector2 colliderPoint = new Vector2(groundDetectPoint.position.x, groundDetectPoint.position.y);
         Collider2D[] objects = Physics2D.OverlapCircleAll(colliderPoint, groundDetectRadius, groundLayer);
         Collider2D[] objects2 = Physics2D.OverlapCircleAll(colliderPoint, groundDetectRadius, secondGroundLayer);
-        if (objects.Length > 0 && (currentState == PlayerStates.InAir || currentState == PlayerStates.DoubleAir))
+        if (objects.Length > 0 && (currentState == PlayerStates.InAir || currentState == PlayerStates.DoubleAir) && playerRB.velocity.y <= 0)
         {
             SetState(PlayerStates.OnGround);
         }
-        if(objects2.Length > 0 && (currentState == PlayerStates.InAir || currentState == PlayerStates.DoubleAir))
+        if(objects2.Length > 0 && (currentState == PlayerStates.InAir || currentState == PlayerStates.DoubleAir) && playerRB.velocity.y <= 0)
         {
             SetState(PlayerStates.OnGround);
         }
