@@ -38,6 +38,6 @@ public class Key : MonoBehaviour
 
     private void UpdateText()
     {
-        textField.text = "Keys: " + keyCount;
+        textField.text = "x " + keyCount + "/3";
     }
 }
