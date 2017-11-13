@@ -594,7 +594,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4233969997644226, guid: 8703542aa6c908644921cbd37bda89de, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.65
+      value: -4.492
       objectReference: {fileID: 0}
     - target: {fileID: 4233969997644226, guid: 8703542aa6c908644921cbd37bda89de, type: 2}
       propertyPath: m_LocalPosition.z
@@ -618,7 +618,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4233969997644226, guid: 8703542aa6c908644921cbd37bda89de, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114535107442928438, guid: 8703542aa6c908644921cbd37bda89de,
+        type: 2}
+      propertyPath: sceneToLoad
+      value: WinScene
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8703542aa6c908644921cbd37bda89de, type: 2}
