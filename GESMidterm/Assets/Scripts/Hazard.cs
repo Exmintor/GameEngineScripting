@@ -5,23 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class Hazard : MonoBehaviour
 {
-
+	private AudioSource audioSource;
 	// Use this for initialization
 	void Start ()
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
+		audioSource = GetComponent<AudioSource>();
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
+			audioSource.Play();
             PlayerMovement player = collision.GetComponent<PlayerMovement>();
             collision.transform.position = player.GetSpawnPoint();
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);

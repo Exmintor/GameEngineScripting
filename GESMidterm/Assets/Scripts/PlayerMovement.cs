@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerState playerState;
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
+	private AudioSource audioSource;
 
     private float horizontalInput;
     private bool hasJumped;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         playerState = GetComponent<PlayerState>();
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+		audioSource = GetComponent<AudioSource>();
         startPosition = this.transform.position;
 
         playerState.PlayerChangedStates += HandleStateChange;
@@ -84,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+		audioSource.Play();
         //Gameplay is more realistic
         //rb.AddForce(new Vector2(0, jumpVelocity), ForceMode2D.Impulse);
         //Gameplay is more fun
