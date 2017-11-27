@@ -6,6 +6,6 @@ public class GenericInteractableObject : MonoBehaviour, IInteractable
 {
     public void Interact()
     {
-        //What happens here?
+        Debug.Log("Interaction Successful");
     }
 }
