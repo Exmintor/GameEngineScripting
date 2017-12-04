@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractable
 {
+    [SerializeField]
+    private string nameText;
+    public string NameText
+    {
+        get
+        {
+            return nameText;
+        }
+        private set
+        {
+            nameText = value;
+        }
+    }
     private bool isOpen = false;
     private Animator animator;
 	// Use this for initialization

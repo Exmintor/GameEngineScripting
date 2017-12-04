@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // This script is attached to a Player
 // It finds Interactable objects and lets the player interact with them
@@ -14,9 +15,16 @@ public class LookForInteractables : MonoBehaviour
     [SerializeField]
     Camera playerCamera;
 
+    [Tooltip("Text field of the UI that holds the name of an Interactbale object")]
+    [SerializeField]
+    Text nameText;
+
     // Update is called once per frame
     void Update()
     {
+        // Default interactble text
+        nameText.text = "";
+
         LookForObject();
     }
 
@@ -54,10 +62,18 @@ public class LookForInteractables : MonoBehaviour
         // Check to see if the object is Interactable
         if (interactableObject != null)
         {
+            // Updates the UI text field with the name of the object
+            ChangeUINameText(interactableObject);
+
             if (Input.GetButtonDown("Interact"))
             {
                 interactableObject.Interact();
             }
         }
+    }
+
+    private void ChangeUINameText(IInteractable interactableObject)
+    {
+        nameText.text = interactableObject.NameText;
     }
 }
