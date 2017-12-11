@@ -98,7 +98,7 @@ public class InventoryMenu : MonoBehaviour
 
     private void ShowMenu()
     {
-		UpdateMenuItems ();
+		UpdateMenuItems();
         inventoryMenuPanel.SetActive(true);
         UpdateCursor();
     }
