@@ -10,7 +10,7 @@ public class InventoryObject : MonoBehaviour, IInteractable
     [SerializeField]
     private string descriptionText;
 
-    private List<InventoryObject> playerInventory;
+	private InventoryMenu playerInventory;
 
     private MeshRenderer meshRenderer;
     private Collider thisCollider;
@@ -41,13 +41,13 @@ public class InventoryObject : MonoBehaviour, IInteractable
     {
         meshRenderer = GetComponent<MeshRenderer>();
         thisCollider = GetComponent<Collider>();
-        playerInventory = FindObjectOfType<InventoryMenu>().InventoryObjects;
+        playerInventory = FindObjectOfType<InventoryMenu>();
 	}
 
     public void Interact()
     {
         meshRenderer.enabled = false;
         thisCollider.enabled = false;
-        playerInventory.Add(this);
+        playerInventory.InventoryObjects.Add(this);
     }
 }

@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 public class InventoryMenuItem : MonoBehaviour
 {
-    Text displayText;
 
-    InventoryObject objectRepresented;
+	private InventoryMenu inventoryMenu;
 
+	public InventoryObject ObjectRepresented { get; set;}
+
+	void Start()
+	{
+		inventoryMenu = FindObjectOfType<InventoryMenu>();
+	}
     public void InventoryObjectWasClicked()
     {
-        displayText.text = objectRepresented.DescriptionText;
+		inventoryMenu.UpdateDescriptionAreaText(ObjectRepresented.DescriptionText);
     }
 }

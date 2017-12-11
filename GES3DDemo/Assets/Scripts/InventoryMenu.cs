@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
 
 public class InventoryMenu : MonoBehaviour
 {
@@ -10,6 +11,14 @@ public class InventoryMenu : MonoBehaviour
 
     [SerializeField]
     private FirstPersonController character;
+
+	[SerializeField]
+	private Text descriptionAreaText;
+
+	[SerializeField]
+	private GameObject itemPrefab;
+	[SerializeField]
+	private Transform inventoryItemListPanel;
 
     private bool IsVisible
     {
@@ -20,10 +29,12 @@ public class InventoryMenu : MonoBehaviour
     }
 
     public List<InventoryObject> InventoryObjects { get; private set; }
+	private List<GameObject> menuItems;
 
     private void Awake()
     {
         InventoryObjects = new List<InventoryObject>();
+		menuItems = new List<GameObject>();
     }
     // Use this for initialization
     void Start ()
@@ -35,6 +46,31 @@ public class InventoryMenu : MonoBehaviour
     {
         CheckForInput();
     }
+
+	public void UpdateDescriptionAreaText(string descriptionText)
+	{
+		descriptionAreaText.text = descriptionText;
+	}
+
+	private void UpdateMenuItems()
+	{
+		foreach (InventoryObject item in InventoryObjects) 
+		{
+			GameObject newMenuItem = Instantiate (itemPrefab, inventoryItemListPanel) as GameObject;
+			newMenuItem.GetComponent<Toggle>().group = inventoryItemListPanel.GetComponent<ToggleGroup>();
+			newMenuItem.GetComponentInChildren<Text>().text = item.NameText;
+			newMenuItem.GetComponent<InventoryMenuItem>().ObjectRepresented = item;
+			menuItems.Add(newMenuItem);
+		}
+	}
+
+	private void DestroyInventoryObjects()
+	{
+		foreach(GameObject item in menuItems)
+		{
+			Destroy(item);
+		}
+	}
 
     private void CheckForInput()
     {
@@ -56,11 +92,13 @@ public class InventoryMenu : MonoBehaviour
     private void HideMenu()
     {
         inventoryMenuPanel.SetActive(false);
+		DestroyInventoryObjects();
         UpdateCursor();
     }
 
     private void ShowMenu()
     {
+		UpdateMenuItems ();
         inventoryMenuPanel.SetActive(true);
         UpdateCursor();
     }
