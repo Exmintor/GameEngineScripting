@@ -12,7 +12,14 @@ public class PortalObject : MonoBehaviour, IInteractable
 
 	[SerializeField]
 	private string nameText;
-	public string NameText 
+
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+    public string NameText 
 	{ 
 		get
 		{
@@ -26,6 +33,10 @@ public class PortalObject : MonoBehaviour, IInteractable
 
 	public void Interact()
 	{
+        if(audioSource != null)
+        {
+            audioSource.Play();
+        }
 		player.transform.position = new Vector3(teleportLocation.position.x, teleportLocation.position.y, teleportLocation.position.z);
 	}
 }

@@ -14,6 +14,8 @@ public class InventoryObject : MonoBehaviour, IInteractable
 
     private MeshRenderer meshRenderer;
     private Collider thisCollider;
+
+    private AudioSource audioSource;
     public string NameText
     {
         get
@@ -42,10 +44,16 @@ public class InventoryObject : MonoBehaviour, IInteractable
         meshRenderer = GetComponent<MeshRenderer>();
         thisCollider = GetComponent<Collider>();
         playerInventory = FindObjectOfType<InventoryMenu>();
+
+        audioSource = GetComponent<AudioSource>();
 	}
 
     public void Interact()
     {
+        if(audioSource != null)
+        {
+            audioSource.Play();
+        }
         meshRenderer.enabled = false;
         thisCollider.enabled = false;
         playerInventory.InventoryObjects.Add(this);
